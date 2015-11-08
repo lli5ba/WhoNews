@@ -9,6 +9,21 @@
 	
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
+
+    <link href="css/FrontPage.css" rel="stylesheet">
+    <script language="javascript" type="text/javascript">
+      var max = 250;
+      function textCounter(text, count) {
+        if (text.value.length > max) {
+          text.value = text.value.substring(0, max);
+
+        } else {
+          count.value = max - text.value.length;
+
+        }
+      }
+
+    </script>
 	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     
@@ -47,12 +62,36 @@
     <div class="container">
 	<h1>WhoNews?</h1>
     <div id='messagesDiv'></div>
-    <input type='text' id='nameInput' placeholder='Name'>
-    <input type='text' id='messageInput' placeholder='Message'>
+    <input class="textBox" type='text' id='nameInput' placeholder='Name'>
+      <form>
+<textarea  style="height: 120px;
+           width: 100%; border: 3px solid #3498DB;"class="textBox" id = "messageInput" name="news" rows="6"
+          onKeyDown="textCounter(this.form.news, this.form.countDisplay);"
+          onKeyUp="textCounter(this.form.news, this.form.countDisplay);"></textarea>
+        <br>
+
+        <div align="right">
+          <input readonly  type="text" name="countDisplay" size="3" maxlength="3" value="250">
+          Characters Remaining
+          <button align="right" class ="button" onclick="push()" type ='button'>Submit</button>
+        </div>
+      </form>
 	<script>
+
+
       var myDataRef = new Firebase('https://whonews.firebaseio.com/');
+
+
+    function push(){
+      var name = $('#nameInput').val();
+      var text = $('#messageInput').val();
+      myDataRef.push({name: name, text: text});
+      $('#messageInput').val('');
+
+    }
+
       $('#messageInput').keypress(function (e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13  ) {
           var name = $('#nameInput').val();
           var text = $('#messageInput').val();
           myDataRef.push({name: name, text: text});
