@@ -47,8 +47,8 @@
       </div>
     </nav>
 <div align="center">
-  <a href="#" class="btn btn-primary" role="button">Summary</a>
-  <a href="OpinionPage.html" class="btn btn-primary" role="button">Opinion</a>
+  <a href="index.html" class="btn btn-primary" role="button">Summary</a>
+  <a href="" class="btn btn-primary" role="button">Opinion</a>
   <a href="#" class="btn btn-primary" role="button" onclick = "order()">Order</a>
 </div>
     <div class="container">
@@ -71,7 +71,7 @@
 	
 	</div>
 	<script language="javascript" type="text/javascript">
-	var myDataRef = new Firebase('https://whonews.firebaseio.com/summary');
+	var myDataRef = new Firebase('https://whonews.firebaseio.com/opinion');
 	var max = 250;
       function textCounter(text, count) {
         if (text.value.length > max) {
