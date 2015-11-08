@@ -58,7 +58,11 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
+<div align="center">
+  <a href="#" style="filter: alpha(opacity=60); opacity:.6; align:center;"class="button" >Summary</a>
+  <a href="html/OpinionPage.html"style="filter: alpha(opacity=60); opacity: .6;align:center;"class="button" >Opinion</a>
+  <a href="#" style="filter: alpha(opacity=60); opacity:.6; align:center;"class="button" onclick = "order()">Order</a>
+</div>
     <div class="container">
 	<h1>WhoNews?</h1>
     <div id='messagesDiv'></div>
@@ -73,20 +77,21 @@
         <div align="right">
           <input readonly  type="text" name="countDisplay" size="3" maxlength="3" value="250">
           Characters Remaining
-          <button align="right" class ="button" onclick="push()" type ='button'>Submit</button>
+          <button align="right" class ="button" onclick="push()" type ='button' id = "subButton">Submit</button>
         </div>
       </form>
 	<script>
 
 
-      var myDataRef = new Firebase('https://whonews.firebaseio.com/');
-
+      var myDataRef = new Firebase('https://whonews.firebaseio.com/summary');
+      var messages = [];
 
     function push(){
       var name = $('#nameInput').val();
       var text = $('#messageInput').val();
       myDataRef.push({name: name, text: text});
       $('#messageInput').val('');
+
 
     }
 
@@ -105,7 +110,13 @@
       function displayChatMessage(name, text) {
         $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
         $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+        messages.add(name, text);
       };
+      
+      function order(){
+          $('#messagesDiv').orderByPriority();
+      }
+
     </script>
     </div><!-- /.container -->
 
