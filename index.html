@@ -11,19 +11,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 
     <link href="css/FrontPage.css" rel="stylesheet">
-    <script language="javascript" type="text/javascript">
-      var max = 250;
-      function textCounter(text, count) {
-        if (text.value.length > max) {
-          text.value = text.value.substring(0, max);
 
-        } else {
-          count.value = max - text.value.length;
-
-        }
-      }
-
-    </script>
 	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     
@@ -39,7 +27,7 @@
   <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+      <div class="container" color="">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -47,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#"><img style="max-width:100px; margin-top: -7px;" src="images/news.png" class="img-responsive" alt="WhoNEWS"/></a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -60,8 +48,7 @@
     </nav>
 
     <div class="container">
-	<h1>WhoNews?</h1>
-    <div id='messagesDiv'></div>
+   
     <input class="textBox" type='text' id='nameInput' placeholder='Name'>
       <form>
 <textarea  style="height: 120px;
@@ -76,11 +63,36 @@
           <button align="right" class ="button" onclick="push()" type ='button'>Submit</button>
         </div>
       </form>
-	<script>
+	   <div id='messagesDiv'>
+	
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-sm-11">
+					<p> Summary</p>
+					<em> By Leandra </em>
+				</div>
+				<div class="col-sm-1 text-center">
+					<button id="up" class="btn btn-primary row"> <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
+					
+					<p class="row text-center" "id="vote" > 0 </p>
+					<button id="down" class="btn btn-primary row text-center"> <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script language="javascript" type="text/javascript">
+	var myDataRef = new Firebase('https://whonews.firebaseio.com/');
+	var max = 250;
+      function textCounter(text, count) {
+        if (text.value.length > max) {
+          text.value = text.value.substring(0, max);
 
+        } else {
+          count.value = max - text.value.length;
 
-      var myDataRef = new Firebase('https://whonews.firebaseio.com/');
-
+        }
+      }
 
     function push(){
       var name = $('#nameInput').val();
@@ -100,16 +112,33 @@
       });
       myDataRef.on('child_added', function(snapshot) {
         var message = snapshot.val();
-        displayChatMessage(message.name, message.text);
+        displayPost(message.name, message.text);
       });
-      function displayChatMessage(name, text) {
-        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+      function displayPost(name, text) {
+		($('#messagesDiv')).prepend(
+		'<div class="jumbotron">			\
+			<div class="row">				\
+				<div class="col-sm-11">		\
+					<p> ' + text + '</p>			\
+					<em> By ' + name + '</em>	\
+				</div>								\
+				<div class="col-sm-1 text-center">	\
+					<button id="up" class="btn btn-primary row"> \
+					<span class="glyphicon glyphicon-chevron-up" aria-hidden="true">	\
+					</span></button>	\
+					<p class="row text-center" "id="vote" >' + 0 + '</p>'
+					+ '<button id="down" class="btn btn-primary row text-center"> \
+					<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"> \
+					</span></button>	\
+				</div> 	\
+			</div>	\
+		</div>');
         $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
       };
+		
     </script>
     </div><!-- /.container -->
 
-	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
